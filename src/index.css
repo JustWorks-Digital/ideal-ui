@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-fg: #1a1a1a;
+  --color-muted: #4a4a4a;
+  --color-canvas: #f7f7f5;
+  --color-surface: #ffffff;
+  --color-line: #767672;
+  --color-accent: #0b57d0;
+  --color-on-accent: #ffffff;
+  --color-danger: #b3261e;
+  --color-danger-bg: #fceeed;
+  --color-ok: #0c6b38;
+  --color-ok-bg: #e8f6ee;
+  --font-sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+    --color-fg: #f2f2f0;
+    --color-muted: #c4c4c0;
+    --color-canvas: #161616;
+    --color-surface: #222222;
+    --color-line: #8a8a86;
+    --color-accent: #8ab4f8;
+    --color-on-accent: #0b1f33;
+    --color-danger: #f2b8b5;
+    --color-danger-bg: #3a1d1c;
+    --color-ok: #7dca9a;
+    --color-ok-bg: #1c3326;
+  }
+
+  body {
+    @apply m-0 bg-canvas font-sans text-lg leading-normal text-fg antialiased;
+  }
+
+  #root {
+    @apply min-h-svh;
+  }
+
+  a {
+    @apply text-accent;
+  }
+
+  :focus-visible {
+    @apply outline-[3px] outline-solid outline-offset-2 outline-accent;
+  }
+
+  [role='alert']:focus {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
