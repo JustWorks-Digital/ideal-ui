@@ -1,0 +1,138 @@
+.rjsf {
+  display: grid;
+  gap: 1rem;
+  align-items: start;
+}
+
+.rjsf > .form-group.rjsf-field-object {
+  display: contents;
+}
+
+.rjsf > .btn {
+  justify-self: start;
+}
+
+.rjsf fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+  min-height: 0;
+}
+
+.rjsf fieldset > * + * {
+  margin-top: 1rem;
+}
+
+.rjsf legend {
+  padding: 0;
+  font-weight: 600;
+}
+
+.rjsf .field-description {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--color-muted);
+}
+
+.rjsf .form-group {
+  display: grid;
+  gap: 0.375rem;
+}
+
+.rjsf .control-label {
+  font-weight: 600;
+}
+
+.rjsf .required {
+  color: var(--color-danger);
+}
+
+.rjsf .required::before {
+  content: ' ';
+}
+
+.rjsf .form-control {
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-line);
+  background: var(--color-canvas);
+  color: var(--color-fg);
+  padding: 0.5rem 0.75rem;
+  font: inherit;
+}
+
+.rjsf .form-control:read-only,
+.rjsf .form-control:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.rjsf .form-group > div:has(> .error-detail) {
+  display: contents;
+}
+
+.rjsf .error-detail {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rjsf .error-detail .text-danger {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-danger);
+}
+
+.rjsf .panel.errors {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-danger);
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+  padding: 1rem;
+}
+
+.rjsf .panel-heading {
+  margin: 0;
+}
+
+.rjsf .panel-title {
+  margin: 0 0 0.375rem;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+.rjsf .list-group {
+  margin: 0;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+.rjsf .list-group-item,
+.rjsf .text-danger {
+  color: var(--color-danger);
+}
+
+.rjsf .btn {
+  justify-self: start;
+  border: 0;
+  border-radius: 0.5rem;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  padding: 0.625rem 1rem;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.rjsf .btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
