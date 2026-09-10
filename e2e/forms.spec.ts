@@ -3,11 +3,20 @@ import { expect, test, type Page } from '@playwright/test'
 
 async function expectNoAxeViolations(page: Page) {
   const results = await new AxeBuilder({ page }).analyze()
-  expect(results.violations).toEqual([])
+  expect(results.violations, JSON.stringify(results.violations, null, 2)).toEqual(
+    [],
+  )
 }
 
 test('light and dark theme can be chosen on every page', async ({ page }) => {
-  for (const path of ['/', '/contact-form', '/contact-form/basic', '/checkout-form']) {
+  for (const path of [
+    '/',
+    '/contact-form',
+    '/contact-form/basic',
+    '/contact-form/react-hook-form',
+    '/contact-form/react-aria',
+    '/checkout-form',
+  ]) {
     await page.goto(path)
     await expect(page.getByRole('group', { name: 'Color theme' })).toBeVisible()
   }
@@ -25,22 +34,33 @@ test('home page has no obvious accessibility violations', async ({ page }) => {
   await expectNoAxeViolations(page)
 })
 
-test('contact form can be completed', async ({ page }) => {
-  await page.route('/api/contact', async (route) => {
-    await route.fulfill({ status: 200, body: '{}' })
+for (const path of [
+  '/contact-form/basic',
+  '/contact-form/react-hook-form',
+  '/contact-form/react-aria',
+]) {
+  test(`${path} can be completed`, async ({ page }) => {
+    await page.route('/api/contact', async (route) => {
+      await route.fulfill({ status: 200, body: '{}' })
+    })
+
+    await page.goto(path)
+    await expectNoAxeViolations(page)
+
+    await page.getByRole('button', { name: 'Submit' }).click()
+    await expect(page.getByRole('alert')).toBeVisible()
+    await expectNoAxeViolations(page)
+
+    await page.getByLabel('Name').fill('Ada Lovelace')
+    await page.getByLabel('Email').fill('ada@example.com')
+    await page.getByLabel('Message').fill('Hello from Ideal.')
+    await page.getByRole('button', { name: 'Submit' }).click()
+    await expect(page.getByRole('status')).toHaveText(
+      'Thanks — your message was sent.',
+    )
+    await expectNoAxeViolations(page)
   })
-
-  await page.goto('/contact-form/basic')
-  await expectNoAxeViolations(page)
-
-  await page.getByLabel('Name').fill('Ada Lovelace')
-  await page.getByLabel('Email').fill('ada@example.com')
-  await page.getByLabel('Message').fill('Hello from Ideal.')
-  await page.getByRole('button', { name: 'Submit' }).click()
-  await expect(page.getByRole('status')).toHaveText(
-    'Thanks — your message was sent.',
-  )
-})
+}
 
 test('checkout form can be completed', async ({ page }) => {
   await page.goto('/checkout-form')
